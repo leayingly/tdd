@@ -3,13 +3,13 @@ var fs = require('fs');
 var path = require('path');
 var _ = require('lodash');
 
-module.exports = function (mongoose) {
+module.exports = function () {
     var obj = {};
-    loadModels(__dirname, obj, mongoose);
+    loadModels(__dirname, obj);
     return obj;
 };
 
-function loadModels(dir, obj, mongoose) {
+function loadModels(dir, obj) {
     var list = fs.readdirSync(dir);
     list.forEach(function (file) {
 
@@ -22,15 +22,15 @@ function loadModels(dir, obj, mongoose) {
 
         /* istanbul ignore if */
         if (stat && stat.isDirectory()) {
-            loadModels(fullName, obj, mongoose);
+            loadModels(fullName, obj);
         } else if (fullName.toLowerCase().indexOf('.js') > -1) {
-            loadOneModel(fullName, obj, mongoose);
+            loadOneModel(fullName, obj);
         }
     });
 }
 
 /* istanbul ignore next */
-function loadOneModel(fullName, obj, mongoose) {
-    var model = require(fullName)(mongoose);
+function loadOneModel(fullName, obj) {
+    var model = require(fullName)();
     _.extend(obj, model);
 }

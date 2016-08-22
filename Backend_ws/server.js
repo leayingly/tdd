@@ -51,7 +51,7 @@ appLogger = global.appLogger;
 appLogger.initApp(nconf.get('loggerConfig'));
 
 
-require('./src/model')(mongoose);
+require('./src/model')();
 var dbConnectionUrl = nconf.get('dbConnectionUrl');
 var dbConnectionTimeoutMS = nconf.get('dbConnectionTimeoutMS');
 var options = {
